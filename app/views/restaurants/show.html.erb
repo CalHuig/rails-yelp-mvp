@@ -1,0 +1,47 @@
+<% resto_url = "https://source.unsplash.com/734x180/?restaurant,#{@restaurant.category}" %>
+
+<% ratings = [] %>
+<% @restaurant.reviews.each do |rr| %>
+  <% rating = rr.rating %>
+  <% ratings << rating %>
+<% end %>
+
+<% sum = ratings.sum %>
+
+<% message = "" %>
+<% if sum == 0 %>
+<% message = "No ratings yet" %>
+<% else %>
+  <% message = sum/ratings.count  %>
+  <% end %>
+
+<div class="card m-5">
+  <img class="card-img-top" src=<%= resto_url %> alt="Card image cap">
+  <div class="card-body">
+    <h1 class="card-title"><strong><%= @restaurant.name%></strong></h1>
+    <h5 class="card-text"> Average rating: <%= message %><%=  %></h5>
+    <h3 class="card-text"><%= @restaurant.category %> restaurant</h3>
+    <p class="card-text"><small class="text-muted"><%= @restaurant.address %></small></p>
+    <p class="card-text"><small class="text-muted"><%= @restaurant.phone_number %></small></p>
+    <%= link_to "Rate this restaurant", new_restaurant_review_path(@restaurant), class: "btn btn-primary" %>
+  </div>
+</div>
+
+<h2 class= "text-center">Reviews 📝</h2>
+
+<div class="container">
+      <div class="row d-flex justify-content-center">
+    <div class = "col-sm-6 mt-3 mb-3">
+
+<% @restaurant.reviews.each do |rr| %>
+  <div class="card mb-3">
+    <h5 class="card-header"> <%= "⭐️" * rr.rating  %>  </h5>
+    <div class="card-body">
+      <h5 class="card-title"> <%= rr.content %> </h5>
+    </div>
+  </div>
+  <% end %>
+
+</div>
+</div>
+</div>
